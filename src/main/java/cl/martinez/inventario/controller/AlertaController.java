@@ -1,6 +1,6 @@
 package cl.martinez.inventario.controller;
 
-import cl.martinez.inventario.model.Alerta;
+import cl.martinez.inventario.dto.AlertaDTO;
 import cl.martinez.inventario.service.AlertaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class AlertaController {
     private final AlertaService alertaService;
 
     @GetMapping
-    public ResponseEntity<List<Alerta>> listarNoLeidas() {
+    public ResponseEntity<List<AlertaDTO>> listarNoLeidas() {
         return ResponseEntity.ok(alertaService.obtenerNoLeidas());
     }
 

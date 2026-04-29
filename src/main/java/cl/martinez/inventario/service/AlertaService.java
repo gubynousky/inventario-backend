@@ -1,10 +1,12 @@
 package cl.martinez.inventario.service;
 
+import cl.martinez.inventario.dto.AlertaDTO;
 import cl.martinez.inventario.model.*;
 import cl.martinez.inventario.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,8 +41,9 @@ public class AlertaService {
         }
     }
 
-    public List<Alerta> obtenerNoLeidas() {
-        return alertaRepository.findByLeidaFalseOrderByCreatedAtDesc();
+    public List<AlertaDTO> obtenerNoLeidas() {
+        return alertaRepository.findByLeidaFalseOrderByCreatedAtDesc().stream()
+                .map(this::toDTO).collect(Collectors.toList());
     }
 
     public Long contarNoLeidas() {
@@ -58,5 +61,17 @@ public class AlertaService {
         List<Alerta> noLeidas = alertaRepository.findByLeidaFalseOrderByCreatedAtDesc();
         noLeidas.forEach(a -> a.setLeida(true));
         alertaRepository.saveAll(noLeidas);
+    }
+
+    private AlertaDTO toDTO(Alerta a) {
+        AlertaDTO dto = new AlertaDTO();
+        dto.setId(a.getId());
+        dto.setProductoId(a.getProducto().getId());
+        dto.setProductoNombre(a.getProducto().getNombre());
+        dto.setNivel(a.getNivel().name());
+        dto.setMensaje(a.getMensaje());
+        dto.setLeida(a.getLeida());
+        dto.setCreatedAt(a.getCreatedAt());
+        return dto;
     }
 }
