@@ -55,6 +55,7 @@ public class SecurityConfig {
             "http://localhost:5173",
             "http://localhost:3000",
             "https://inventario-frontend.vercel.app",
+            "https://inventario-frontend-kappa.vercel.app",
             "https://inventario-frontend-gubynousky.vercel.app",
             "https://inventario-frontend-git-main-gubynousky.vercel.app"
         ));
